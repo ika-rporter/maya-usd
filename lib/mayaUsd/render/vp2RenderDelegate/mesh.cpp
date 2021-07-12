@@ -1503,6 +1503,7 @@ void HdVP2Mesh::_CreateSmoothHullRenderItems(HdVP2DrawItem& drawItem)
         MHWRender::MRenderItem* renderItem = _CreateSmoothHullRenderItem(renderItemName);
         drawItem.AddRenderItem(renderItem, &geomSubset);
 
+#ifdef HAS_DEFAULT_MATERIAL_SUPPORT_API
         if (!GetInstancerId().IsEmpty()) {
             renderItemName += std::string(1, VP2_RENDER_DELEGATE_SEPARATOR).c_str();
             renderItemName += "shadedSelectedInstances";
@@ -1510,6 +1511,7 @@ void HdVP2Mesh::_CreateSmoothHullRenderItems(HdVP2DrawItem& drawItem)
             HdVP2DrawItem::RenderItemData& renderItemData = drawItem.AddRenderItem(renderItem);
             renderItemData._shadedSelectedInstances = true;
         }
+#endif
 
         // now fill in _faceIdToGeomSubsetId at geomSubset.indices with the subset item pointer
         for (auto faceId : geomSubset.indices) {
@@ -1528,6 +1530,7 @@ void HdVP2Mesh::_CreateSmoothHullRenderItems(HdVP2DrawItem& drawItem)
             = _CreateSmoothHullRenderItem(drawItem.GetDrawItemName());
         drawItem.AddRenderItem(renderItem);
 
+#ifdef HAS_DEFAULT_MATERIAL_SUPPORT_API
         if (!GetInstancerId().IsEmpty()) {
             MString renderItemName = drawItem.GetDrawItemName();
             renderItemName += std::string(1, VP2_RENDER_DELEGATE_SEPARATOR).c_str();
@@ -1538,6 +1541,7 @@ void HdVP2Mesh::_CreateSmoothHullRenderItems(HdVP2DrawItem& drawItem)
                 = drawItem.AddRenderItem(shadedSelectedInstancesRenderItem);
             shadedSelectedInstancesRenderItemData._shadedSelectedInstances = true;
         }
+#endif
 
         if (numFacesWithoutRenderItem == topology.GetNumFaces()) {
             // If there are no geom subsets that are material bind geom subsets, then we don't need
