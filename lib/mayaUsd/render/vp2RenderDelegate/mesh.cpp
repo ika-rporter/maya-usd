@@ -2004,8 +2004,7 @@ void HdVP2Mesh::_UpdateDrawItem(
                     }
                 }
             } else if (_selectionStatus == kFullyLead || _selectionStatus == kFullyActive) {
-                const bool lead = (_selectionStatus == kFullyLead);
-                modeDormant = lead ? lead : active;
+                modeDormant = _selectionStatus == kFullyLead ? lead : active;
                 stateToCommit._instanceColorParam = kSolidColorStr;
             } else {
                 modeDormant = isDedicatedSelectionHighlightItem ? invalid : dormant;
